@@ -7,6 +7,8 @@ class Util:
   def __init__(self):
     self.address_search = re.compile(r'([\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4})')
 
+  def timestamp_mod(self,ts):
+    return ts.replace(":","-").replace(".","-").replace("+","-")
 
   def mail(self,sender,recipient,message,password):
     self.s = smtplib.SMTP(host='smtp.gmail.com', port=587)
