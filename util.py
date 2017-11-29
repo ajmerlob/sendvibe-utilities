@@ -5,7 +5,8 @@ import re
 
 class Util:
   def __init__(self):
-    pass
+    self.address_search = re.compile(r'([\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4})')
+
 
   def mail(self,sender,recipient,message,password):
     self.s = smtplib.SMTP(host='smtp.gmail.com', port=587)
@@ -15,24 +16,14 @@ class Util:
     self.s.quit()
 
   def scrub(self,txt):
-    def _scrub(pattern,txt):
-      try:
-        email = re.search(pattern,txt).group(1)
-        if '@' in email:
-          return email
-        else:
-          email2 = email.replace(email,"").strip()
-          if '@' in email2:
-            return email2
-          else:
-            return txt
-      except:
-        return txt
- 
-    if "<" in txt and ">" in txt:
-      return _scrub("<(.*)>",txt)
-    elif "(" in txt and ")" in txt:
-      return _scrub("\((.*)\)",txt)
-    elif '"' in txt:
-      return _scrub('"(.*)"',txt)
-    return txt
+    addresses = [m.group(1) for m in self.address_search.finditer(txt)]
+    print addresses
+    ## Return the shortest email address
+    return min(addresses, key=len)
+
+if __name__ == "__main__":
+  u = Util()
+  assert u.scrub('"Jill McGee" Jill@McGee.com  ') == "Jill@McGee.com"
+  assert u.scrub("<aa@bb.com> Babbots Babbots") == "aa@bb.com"
+  assert u.scrub("(Bob) Cool@cool.com") == "Cool@cool.com"
+  assert u.scrub("(SillyJim)Silly@cool.com") == "Silly@cool.com"
