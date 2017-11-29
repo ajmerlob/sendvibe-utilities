@@ -22,7 +22,7 @@ class Util:
           return email
         else:
           email2 = email.replace(email,"").strip()
-          if '@' in email2
+          if '@' in email2:
             return email2
           else:
             return txt
