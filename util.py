@@ -2,12 +2,6 @@ import math
 import sys
 import smtplib
 import re
-result = re.search('asdf=5;(.*)123jasd', s)
-print result.group(1)import re
-
-s = 'asdf=5;iwantthis123jasd'
-result = re.search('asdf=5;(.*)123jasd', s)
-print result.group(1)
 
 class Util:
   def __init__(self):
