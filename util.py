@@ -2,10 +2,15 @@ import math
 import sys
 import smtplib
 import re
+import base64
 
 class Util:
   def __init__(self):
     self.address_search = re.compile(r'([\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4})')
+
+  def interpret(self,message):
+    msg_str = base64.urlsafe_b64decode(message.encode('ASCII'))
+    return msg_str
 
   def timestamp_mod(self,ts):
     return ts.replace(":","-").replace(".","-").replace("+","-")
