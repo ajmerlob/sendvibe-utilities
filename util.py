@@ -25,7 +25,7 @@ class Util:
   def scrub(self,txt):
     addresses = [m.group(1) for m in self.address_search.finditer(txt)]
     if len(addresses) == 0:
-      return ['']
+      return ''
     ## Return the shortest email address
     return min(addresses, key=len)
 
